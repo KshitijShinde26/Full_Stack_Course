@@ -1,0 +1,77 @@
+package com.basic.Session_Management;
+
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet("/SiteController")
+public class SiteController extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException, IOException {
+		String action = request.getParameter("action");
+
+		if ("home".equals(action)) {
+
+			HttpSession session = request.getSession(false);
+
+			if (session != null && session.getAttribute("user") != null) {
+				response.sendRedirect("home.jsp");
+			} else {
+				response.sendRedirect("login.jsp");
+			}
+		}
+
+		else if ("login".equals(action)) {
+			response.sendRedirect("login.jsp");
+		}
+
+		else {
+			response.sendRedirect("login.jsp");
+		}
+	}
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+            throws ServletException, IOException {
+    	System.out.println("Servlet reached");
+
+        String action = request.getParameter("action");
+
+        // LOGIN
+        if("login".equals(action)) {
+
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            if(username!=null && password!=null) {
+            	request.getSession().invalidate();
+                HttpSession session = request.getSession();
+                session.getMaxInactiveInterval();
+                session.setAttribute("user", username);
+                Cookie cookie = new Cookie("username", username);
+                response.addCookie(cookie);
+                response.sendRedirect("home.jsp");
+
+            } else {
+                response.sendRedirect("login.jsp");
+            }
+        }
+
+        // LOGOUT
+        else if("logout".equals(action)) {
+
+            HttpSession session = request.getSession(false);
+
+            if(session != null){
+                session.invalidate();
+            }
+
+            response.sendRedirect("login.jsp");
+        }
+    }
+}

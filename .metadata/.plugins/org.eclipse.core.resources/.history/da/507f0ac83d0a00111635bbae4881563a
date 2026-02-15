@@ -1,0 +1,68 @@
+package com.basic;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+import java.io.IOException;
+
+@WebServlet("/site")
+public class SiteController extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            action = "home";
+        }
+
+        switch (action) {
+
+            case "login":
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp")
+                        .forward(request, response);
+                break;
+
+            case "member":
+                request.getRequestDispatcher("/WEB-INF/views/member.jsp")
+                        .forward(request, response);
+                break;
+
+            case "home":
+            default:
+                request.getRequestDispatcher("index.jsp")
+                        .forward(request, response);
+                break;
+        }
+    }
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if ("loginUser".equals(action)) {
+
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            if ("admin".equals(username) && "123".equals(password)) {
+
+                request.setAttribute("username", username);
+
+                request.getRequestDispatcher("/WEB-INF/views/member.jsp")
+                        .forward(request, response);
+
+            } else {
+
+                request.setAttribute("error", "Invalid Credentials!");
+
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp")
+                        .forward(request, response);
+            }
+        }
+    }
+}
