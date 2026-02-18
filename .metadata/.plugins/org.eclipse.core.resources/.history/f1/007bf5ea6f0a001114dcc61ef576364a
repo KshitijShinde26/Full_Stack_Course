@@ -1,5 +1,0 @@
-<jsp:include page=""/>
-
-<a href="<%= request.getContextPath() %>/site?action=login">
-   <h2> Go to Login Page</h2>
-</a>

@@ -29,6 +29,24 @@
     </nav>
 
 </div>
+<section id="banner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Welcome to Demo Web page!</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12"> 
+                        <p>By Kshitij <a href="http://www.themewagon.com">(THEMEWAGON as Background image)</a></p>
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+
 
 </body>
 </html>

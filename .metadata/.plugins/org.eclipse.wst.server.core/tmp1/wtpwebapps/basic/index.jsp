@@ -7,6 +7,16 @@
     <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ionicons.min.css">
     <link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
+    
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Solid State</title>
+        <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ionicons.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Istok+Web:400,400i,700,700i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
 </head>
 
 <body>
@@ -14,17 +24,11 @@
 <!-- Preloader -->
 <div id="preloader"></div>
 
-<div class="body-content">
+<div class="body-content" style="display:none;">
 
     <%@ include file="include/header.jsp" %>
 
-    <!-- Welcome Section -->
-    <section style="height: 100vh; display:flex; justify-content:center; align-items:center;">
-        <div class="text-center">
-            <h1>Welcome to My Project</h1>
-            <p>JSP + Servlet Web Application</p>
-        </div>
-    </section>
+    
 
     <%@ include file="include/footer.jsp" %>
 
