@@ -5,25 +5,12 @@ import java.sql.DriverManager;
 
 public class dbConnection {
 
-    public static Connection getConnection() {
-        Connection con = null;
+    private static String url = "jdbc:mysql://localhost:3306/basic";
+    private static String user = "root";
+    private static String password = "root";
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/basic",
-                "root",
-                "root"
-            );
-
-            System.out.println("Connected Successfully!");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return con;
+    public static Connection getConnection() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection(url, user, password);
     }
 }
-

@@ -1,285 +1,276 @@
-/* =====================
-   GLOBAL SETTINGS
-===================== */
+/* ===== GLOBAL ===== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #0d1117;
-    color: #e6edf3;
-    line-height: 1.6;
+body{
+    font-family:Arial,sans-serif;
+    background:#050816;
+    color:white;
+    overflow-x:hidden;
 }
 
-/* =====================
-   HEADER
-===================== */
+/* ===== BACKGROUND ===== */
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    background: #161b22;
-    padding: 35px 20px;
+.bg-glow{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:
+    radial-gradient(circle at 20% 20%, #7a4dff55, transparent 40%),
+    radial-gradient(circle at 80% 80%, #00c8ff44, transparent 40%);
+    z-index:-1;
 }
 
-.profile-box img {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #58a6ff;
-}
+/* ===== ULTRA CLEAN NAVBAR ===== */
 
-.intro h1 {
-    color: #58a6ff;
-    font-size: 32px;
-}
+.glass-nav{
 
-.intro p {
-    margin-top: 5px;
-    color: #c9d1d9;
-}
+    position: sticky;
+    top: 14px;
+    z-index: 1000;
 
-/* =====================
-   NAVBAR
-===================== */
+    width: 90%;
+    margin: 14px auto;
 
-nav {
-    background: #21262d;
-    text-align: center;
-    padding: 14px;
-}
-
-nav a {
-    color: #58a6ff;
-    text-decoration: none;
-    margin: 0 14px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: white;
-}
-
-/* =====================
-   SECTION LAYOUT
-===================== */
-
-section {
-    width: 80%;
-    max-width: 1100px;
-    margin: auto;
-    padding: 55px 0;
-}
-
-h2 {
-    color: #58a6ff;
-    margin-bottom: 20px;
-    font-size: 28px;
-}
-
-/* =====================
-   UNIVERSAL CARD UI
-===================== */
-
-.card-ui {
-    background: #161b22;
-    padding: 25px;
-    border-radius: 12px;
-    margin-top: 15px;
-    transition: 0.3s ease;
-}
-
-.card-ui:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(88,166,255,0.25);
-}
-
-/* =====================
-   SKILLS LIST
-===================== */
-
-.skills-list {
-    list-style: none;
-}
-
-.skills-list li {
-    position: relative;
-    padding-left: 22px;
-    margin: 10px 0;
-}
-
-.skills-list li::before {
-    content: "●";
-    position: absolute;
-    left: 0;
-    color: #58a6ff;
-    font-size: 14px;
-}
-
-/* =====================
-   EXPERIENCE
-===================== */
-
-.exp-header {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.exp-header h3 {
-    color: #58a6ff;
-}
-
-.exp-type {
-    background: #21262d;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 13px;
-    color: #58a6ff;
-}
-
-.company {
-    margin: 10px 0;
-    color: #c9d1d9;
-}
-
-.exp-points {
-    list-style: none;
-}
-
-.exp-points li {
-    position: relative;
-    padding-left: 20px;
-    margin: 8px 0;
-}
-
-.exp-points li::before {
-    content: "●";
-    position: absolute;
-    left: 0;
-    color: #58a6ff;
-}
-
-/* =====================
-   TIMELINE (MAIN FIX)
-===================== */
-
-.timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-}
-
-/* Proper alignment card */
-.timeline-item {
-    display: flex;
     align-items: center;
-    gap: 20px;
-    background: #161b22;
-    padding: 20px;
-    border-radius: 12px;
-    transition: 0.3s ease;
+
+    padding: 14px 28px;
+
+    background: linear-gradient(
+        90deg,
+        rgba(90,60,180,0.35),
+        rgba(10,15,35,0.75)
+    );
+
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
 }
 
-.timeline-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0 15px rgba(88,166,255,0.25);
+/* LOGO */
+
+.logo{
+    display:flex;
+    flex-direction:column;
+    color:white;
+    font-weight:700;
+    line-height:1.2;
 }
 
-.timeline-item img {
-    width: 220px;
-    height: auto;
-    border-radius: 10px;
-    object-fit: cover;
+.logo span{
+    font-size:13px;
+    opacity:0.75;
+    font-weight:500;
 }
 
-/* Text alignment */
-.timeline-item .text {
-    flex: 1;
+/* LINKS */
+
+.nav-links{
+    display:flex;
+    gap:28px;
 }
 
-.timeline-item h3 {
-    color: #58a6ff;
-    margin-bottom: 8px;
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-weight:600;
+    font-size:18px;
+    position:relative;
+    transition:0.3s;
 }
 
-/* =====================
-   CONTACT
-===================== */
+/* HOVER */
 
-#contact a {
-    color: #58a6ff;
-    text-decoration: none;
+.nav-links a:hover{
+    color:#9f7cff;
 }
 
-#contact a:hover {
-    text-decoration: underline;
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0%;
+    height:2px;
+    background:#9f7cff;
+    transition:0.3s;
 }
 
-/* =====================
-   FOOTER
-===================== */
-
-footer {
-    text-align: center;
-    background: #161b22;
-    padding: 18px;
-    margin-top: 40px;
+.nav-links a:hover::after{
+    width:100%;
 }
 
-/* =====================
-   MOBILE RESPONSIVE
-===================== */
+/* ===== GLASS ===== */
 
-@media (max-width: 768px) {
-
-.header {
-    flex-direction: column;
-    text-align: center;
+.glass{
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px;
 }
 
-section {
-    width: 90%;
+/* ===== HERO FIXED ===== */
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    margin-top:15px;
 }
 
-.timeline-item {
-    flex-direction: column;
-    text-align: center;
+.btn-outline{
+    padding:10px 20px;
+    border:1px solid #9f7cff;
+    color:#9f7cff;
+    text-decoration:none;
+    border-radius:8px;
 }
 
-.timeline-item img {
-    width: 100%;
-}
-/* ===== EDUCATION ===== */
+.hero{
+    width:85%;
+    margin:35px auto;
+    padding:45px;
 
-.education-card h3 {
-    color: #58a6ff;
-    margin-bottom: 8px;
-}
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
 
-.edu-college {
-    color: #c9d1d9;
-    margin-bottom: 6px;
+    flex-wrap:wrap;   /* ⭐ FIX OVERFLOW */
 }
 
-.edu-duration {
-    color: #8b949e;
-    margin-bottom: 12px;
+.hero-left{
+    flex:1;
+    min-width:300px;
 }
 
+.hero-left h1{
+    font-size:48px;
+}
 
+.hero-left span{
+    color:#9f7cff;
+}
 
-.exp-header {
-    flex-direction: column;
-    align-items: flex-start;
+.hero-left h2{
+    margin:12px 0;
+    color:#cfc3ff;
+}
+
+.hero-left p{
+    margin:18px 0;
+    max-width:500px;
+}
+
+/* BUTTON */
+
+.btn{
+    display:inline-block;
+    padding:10px 22px;
+    background:linear-gradient(45deg,#9f7cff,#6e4bff);
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+/* HERO IMAGE FIX */
+
+.hero-right{
+    flex:1;
+    display:flex;
+    justify-content:center;
+}
+
+.hero-right img{
+    width:280px;
+    max-width:100%;
+    border-radius:16px;
+    border:2px solid #9f7cff;
+}
+
+/* ===== SECTIONS ===== */
+
+section{
+    width:85%;
+    margin:28px auto;
+}
+
+.section-box{
+    padding:30px;
+}
+
+h2{
+    color:#9f7cff;
+    margin-bottom:15px;
+}
+
+/* ===== SKILLS ===== */
+
+.skills-list{
+    list-style:none;
+}
+
+.skills-list li{
+    padding-left:20px;
+    margin:10px 0;
+    position:relative;
+}
+
+.skills-list li::before{
+    content:"●";
+    position:absolute;
+    left:0;
+    color:#9f7cff;
+}
+
+/* ===== TIMELINE ===== */
+
+.timeline{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.timeline img{
+    width:180px;
+    border-radius:10px;
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+    text-align:center;
+    padding:20px;
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:900px){
+
+.hero{
+    flex-direction:column;
+    text-align:center;
+}
+
+.hero-right img{
+    width:220px;
+}
+
+.timeline{
+    flex-direction:column;
+}
+
+.timeline img{
+    width:100%;
+}
+
+.nav-links{
+    display:none;
 }
 }

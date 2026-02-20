@@ -1,52 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Header</title>
+<title>User Management</title>
+
+<link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ionicons.min.css">
+
+<style>
+body {
+    background-color: #242d44;
+    color: #ffffff;
+}
+
+.content-box {
+    margin-top: 120px;
+    background: #ffffff;
+    color: #000;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
+}
+</style>
+
 </head>
 <body>
-<div class="navbar-solid-state">
 
-    <header id="header" class="alt">
-        <nav>
-            <a href="#menu" class="a-menu">
-                Menu <i class="ion-android-menu"></i>
-            </a>
-        </nav>
-    </header>
-
-    <nav id="menu">
-        <div class="inner">
-            <h2>Menu</h2>
-            <ul class="links">
-                <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
-                <li><a href="#">Elements</a></li>
-            </ul>
-            <a href="#" class="close">Close</a>
-        </div>
+<!-- Template Header -->
+<header id="header" class="alt">
+    <nav>
+        <p> Create , Read , Delete and Update operation (CRUD) <br>
+            DATABASE BASIC OPERATION</p>
     </nav>
+</header>
 
-</div>
-<section id="banner">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Welcome to Demo Web page!</h2>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12"> 
-                        <p>By Kshitij <a href="http://www.themewagon.com">(THEMEWAGON as Background image)</a></p>
-                    </div>
-                </div>
-
-                
-            </div>
-        </section>
-
-
-</body>
-</html>
+<div class="container">
