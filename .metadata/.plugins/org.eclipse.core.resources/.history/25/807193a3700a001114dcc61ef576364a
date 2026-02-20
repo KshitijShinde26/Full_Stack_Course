@@ -1,6 +1,0 @@
-<%@ include file="include/header.jsp"%>
-
-<a href="<%= request.getContextPath() %>/site?action=login">
-   <h2> Go to Login Page</h2>
-</a>
-<%@  inclfile="include/footer.jsp"%>

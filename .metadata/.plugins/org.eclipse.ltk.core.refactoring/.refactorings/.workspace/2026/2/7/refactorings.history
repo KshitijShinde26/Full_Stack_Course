@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;basic/src/main/webapp/Session_Management&apos;" deleteContents="false" description="Delete resource &apos;basic/src/main/webapp/Session_Management&apos;" element1="/basic/src/main/webapp/Session_Management" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1770989847815"/>
-</session>
