@@ -2,14 +2,14 @@ package com.basic.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
+import java.util.*;
 public class App {
 
     public static void main(String[] args) {
 
         Session session = null;
         Transaction transaction = null;
-
+        Scanner in = new Scanner(System.in);
         try {
             // Open session
             session = HibernateUtil.getSessionFactory().openSession();
@@ -19,8 +19,12 @@ public class App {
 
             // Create User object
             User user = new User();
-            user.setName("Kshitij");
-            user.setEmail("kshitij@gmail.com");
+            System.out.println("Enter user:");
+            String name = in.nextLine();
+            user.setName(name);
+            System.out.println("Enter Email:");
+            String email = in.nextLine();
+            user.setEmail(email);
 
             // Save object
             session.persist(user);
