@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello JSP</title>
+   <title>Hello JSP</title>
 </head>
 <body>
 
