@@ -1,4 +1,4 @@
-package com.basic_spring.demo.Controller;
+package com.basic_spring.demo.controller;
 
 
 
