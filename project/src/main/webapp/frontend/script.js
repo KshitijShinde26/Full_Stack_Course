@@ -1,54 +1,140 @@
-let tasks = [];
-
 function addTask() {
-    const title = document.getElementById("taskTitle").value.trim();
-    const dueDate = document.getElementById("dueDate").value;
 
-    if (!title) return;
+    var title = document.getElementById("taskInput").value.trim();
+    var priority = document.getElementById("priority").value;
 
-    tasks.push({
-        id: Date.now(),
-        title,
-        dueDate,
-        completed: false
+    if (title === "") {
+        alert("Please enter a task");
+        return;
+    }
+
+    fetch("../tasks", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "title=" + encodeURIComponent(title) + "&priority=" + priority
+    })
+    .then(function () {
+
+        document.getElementById("taskInput").value = "";
+        loadTasks();
+
     });
 
-    renderTasks();
-
-    document.getElementById("taskTitle").value = "";
-    document.getElementById("dueDate").value = "";
 }
 
-function renderTasks() {
-    const list = document.getElementById("taskList");
-    list.innerHTML = "";
 
-    tasks.forEach(task => {
-        const item = document.createElement("div");
-        item.className = "task-item";
 
-        item.innerHTML = `
-            <div class="task-left">
-                <input type="checkbox" ${task.completed ? "checked" : ""} 
-                    onchange="toggleTask(${task.id})">
-                <span>${task.title}</span>
-                ${task.dueDate ? `<span class="due-date">${task.dueDate}</span>` : ""}
-            </div>
-            <button class="delete-btn" onclick="deleteTask(${task.id})">✖</button>
-        `;
+function loadTasks() {
 
-        list.appendChild(item);
+    fetch("../tasks")
+    .then(function (res) {
+        return res.json();
+    })
+    .then(function (data) {
+
+        var list = document.getElementById("taskList");
+        list.innerHTML = "";
+
+        data.forEach(function (task) {
+
+            var card = document.createElement("div");
+            card.className = "task-card";
+
+            var checked = task.completed ? "checked" : "";
+            var completedClass = task.completed ? "completed" : "";
+
+            card.innerHTML =
+
+                "<div class='task-left'>" +
+
+                "<input type='checkbox' class='task-check' " + checked +
+                " onchange='toggleTask(" + task.id + ")'>" +
+
+                "<span class='task-title " + completedClass + "'>" +
+                task.title +
+                "</span>" +
+
+                "<span class='priority " + task.priority + "'>" +
+                task.priority +
+                "</span>" +
+
+                "</div>" +
+
+                "<div class='task-actions'>" +
+
+                "<button class='edit-btn' onclick=\"editTask(" + task.id + ", '" + task.title + "')\">" +
+                "✏" +
+                "</button>" +
+
+                "<button class='delete-btn' onclick='deleteTask(" + task.id + ")'>" +
+                "🗑" +
+                "</button>" +
+
+                "</div>";
+
+            list.appendChild(card);
+
+        });
+
     });
+
 }
 
-function toggleTask(id) {
-    tasks = tasks.map(t =>
-        t.id === id ? { ...t, completed: !t.completed } : t
-    );
-    renderTasks();
-}
+
 
 function deleteTask(id) {
-    tasks = tasks.filter(t => t.id !== id);
-    renderTasks();
+
+    fetch("../tasks?id=" + id, {
+        method: "DELETE"
+    })
+    .then(function () {
+        loadTasks();
+    });
+
 }
+
+
+
+function toggleTask(id) {
+
+    fetch("../tasks?id=" + id, {
+        method: "PUT"
+    })
+    .then(function () {
+        loadTasks();
+    });
+
+}
+
+
+
+function editTask(id, title) {
+
+    var newTitle = prompt("Edit Task", title);
+
+    if (newTitle === null || newTitle.trim() === "") {
+        return;
+    }
+
+    fetch("../tasks", {
+
+        method: "PATCH",
+
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+
+        body: "id=" + id + "&title=" + encodeURIComponent(newTitle)
+
+    })
+    .then(function () {
+        loadTasks();
+    });
+
+}
+
+
+
+window.onload = loadTasks;
