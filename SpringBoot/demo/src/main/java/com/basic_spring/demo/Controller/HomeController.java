@@ -1,7 +1,5 @@
 package com.basic_spring.demo.controller;
 
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -13,13 +11,14 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/book")
-    public String book() {
-        return "book";
+    @GetMapping("/register")
+    public String register() {
+        return "register";
     }
 
-    @GetMapping("/about")
-    public String about() {
-        return "about";
+    @GetMapping("/courses")
+    public String courses() {
+        return "course";
     }
+
 }
