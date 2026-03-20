@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg,#1e3c72,#2a5298);
+            color:white;
+        }
+        .glass {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding:20px;
+            border-radius:15px;
+        }
+        table {
+            background:white;
+            color:black;
+        }
+        .card-box {
+            padding:20px;
+            border-radius:15px;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container mt-4">
+
+    <h2 class="text-center">🚀 Task Dashboard</h2>
+
+    <!-- DASHBOARD -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card-box bg-primary">
+                <h5>Total</h5>
+                <h2 th:text="${#lists.size(tasks)}"></h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-box bg-success">
+                <h5>Completed</h5>
+                <h2 th:text="${#lists.size(tasks.?[status=='COMPLETED'])}"></h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-box bg-warning text-dark">
+                <h5>Pending</h5>
+                <h2 th:text="${#lists.size(tasks.?[status=='PENDING'])}"></h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD TASK -->
+    <div class="glass mb-4">
+        <form action="/add" method="post" class="row g-2">
+            <div class="col-md-3">
+                <input name="title" placeholder="Title" class="form-control" required>
+            </div>
+
+            <div class="col-md-3">
+                <input name="description" placeholder="Description" class="form-control">
+            </div>
+
+            <div class="col-md-2">
+                <select name="priority" class="form-control">
+                    <option>LOW</option>
+                    <option>MEDIUM</option>
+                    <option>HIGH</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <input type="date" name="dueDate" class="form-control">
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-light w-100">Add</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- TABLE -->
+    <div class="glass">
+        <table class="table table-striped">
+
+            <tr>
+                <th>Title</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.title}"></td>
+
+                <td>
+                    <span class="badge bg-danger" th:if="${task.priority=='HIGH'}">HIGH</span>
+                    <span class="badge bg-warning text-dark" th:if="${task.priority=='MEDIUM'}">MEDIUM</span>
+                    <span class="badge bg-success" th:if="${task.priority=='LOW'}">LOW</span>
+                </td>
+
+                <td>
+                    <span class="badge bg-success" th:if="${task.status=='COMPLETED'}">Done</span>
+                    <span class="badge bg-secondary" th:if="${task.status=='PENDING'}">Pending</span>
+                </td>
+
+                <td>
+
+                    <!-- ✅ EDIT BUTTON FIXED -->
+                    <button class="btn btn-warning btn-sm"
+                        onclick="openEditModal(this)"
+                        th:attr="
+                            data-id=${task.id},
+                            data-title=${task.title},
+                            data-desc=${task.description},
+                            data-priority=${task.priority},
+                            data-status=${task.status},
+                            data-date=${task.dueDate}">
+                        ✏
+                    </button>
+
+                    <a th:href="@{/delete/{id}(id=${task.id})}" class="btn btn-danger btn-sm">🗑</a>
+                    <a th:href="@{/complete/{id}(id=${task.id})}" class="btn btn-success btn-sm">✔</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <!-- HIDDEN DATA FOR CHART -->
+    <input type="hidden" id="completed" th:value="${#lists.size(tasks.?[status=='COMPLETED'])}">
+    <input type="hidden" id="pending" th:value="${#lists.size(tasks.?[status=='PENDING'])}">
+    <input type="hidden" id="high" th:value="${#lists.size(tasks.?[priority=='HIGH'])}">
+    <input type="hidden" id="medium" th:value="${#lists.size(tasks.?[priority=='MEDIUM'])}">
+    <input type="hidden" id="low" th:value="${#lists.size(tasks.?[priority=='LOW'])}">
+
+    <!-- CHARTS -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <canvas id="statusChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="priorityChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+        <div class="modal-content p-3">
+
+            <h4>Edit Task</h4>
+
+            <form action="/update" method="post">
+
+                <input type="hidden" id="editId" name="id">
+
+                <input id="editTitle" name="title" class="form-control mb-2" required>
+                <input id="editDesc" name="description" class="form-control mb-2">
+                <input id="editDate" name="dueDate" type="date" class="form-control mb-2">
+
+                <select id="editPriority" name="priority" class="form-control mb-2">
+                    <option>LOW</option>
+                    <option>MEDIUM</option>
+                    <option>HIGH</option>
+                </select>
+
+                <select id="editStatus" name="status" class="form-control mb-2">
+                    <option>PENDING</option>
+                    <option>COMPLETED</option>
+                </select>
+
+                <button class="btn btn-success w-100">Update</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+function openEditModal(btn){
+    document.getElementById("editId").value = btn.getAttribute("data-id");
+    document.getElementById("editTitle").value = btn.getAttribute("data-title");
+    document.getElementById("editDesc").value = btn.getAttribute("data-desc");
+    document.getElementById("editPriority").value = btn.getAttribute("data-priority");
+    document.getElementById("editStatus").value = btn.getAttribute("data-status");
+
+    let date = btn.getAttribute("data-date");
+    if(date && date !== 'null'){
+        document.getElementById("editDate").value = date;
+    }
+
+    new bootstrap.Modal(document.getElementById('editModal')).show();
+}
+
+// CHARTS
+let completed = document.getElementById("completed").value;
+let pending = document.getElementById("pending").value;
+let high = document.getElementById("high").value;
+let medium = document.getElementById("medium").value;
+let low = document.getElementById("low").value;
+
+new Chart(document.getElementById('statusChart'), {
+    type: 'pie',
+    data: {
+        labels: ['Completed','Pending'],
+        datasets: [{ data: [completed, pending] }]
+    }
+});
+
+new Chart(document.getElementById('priorityChart'), {
+    type: 'bar',
+    data: {
+        labels: ['HIGH','MEDIUM','LOW'],
+        datasets: [{ data: [high, medium, low] }]
+    }
+});
+
+</script>
+
+</body>
+</html>
