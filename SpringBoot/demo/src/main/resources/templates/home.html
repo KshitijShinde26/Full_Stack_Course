@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="layout">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div layout:fragment="content">
+<body>
 
-<h1>Welcome to My Learning App</h1>
+<h1>Dashboard</h1>
 
-<p>This is the home page.</p>
+<p>Logged in as: <span sec:authentication="name"></span></p>
 
+<!-- USER -->
+<div sec:authorize="hasRole('USER')">
+    <h2>User Dashboard</h2>
 </div>
 
+<!-- ADMIN -->
+<div sec:authorize="hasRole('ADMIN')">
+    <h2>Admin Panel</h2>
+</div>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+</body>
 </html>

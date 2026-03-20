@@ -1,35 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="layout">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+</head>
 
-<div layout:fragment="content">
+<body>
 
-<h2>Register</h2>
+<h2>Register Account</h2>
 
-<form>
-
-<div class="mb-3">
-<label>Name</label>
-<input type="text" class="form-control">
-</div>
-
-<div class="mb-3">
-<label>Email</label>
-<input type="email" class="form-control">
-</div>
-
-<div class="mb-3">
-<label>Password</label>
-<input type="password" class="form-control">
-</div>
-
-<button class="btn btn-primary">
-Register
-</button>
-
+<<form method="post" action="/saveUser">
+    <input type="text" name="email" placeholder="Email"/>
+    <input type="password" name="password" placeholder="Password"/>
+    <button type="submit">Register</button>
 </form>
-
-</div>
-
+</body>
 </html>

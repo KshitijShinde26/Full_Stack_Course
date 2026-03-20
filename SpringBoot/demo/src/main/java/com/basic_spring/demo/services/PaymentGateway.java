@@ -1,4 +1,4 @@
-package com.basic_spring.demo.Service;
+package com.basic_spring.demo.services;
 
 
 public interface PaymentGateway {
