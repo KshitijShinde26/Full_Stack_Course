@@ -8,16 +8,20 @@
 
 <p>Logged in as: <span sec:authentication="name"></span></p>
 
-<!-- USER -->
-<div sec:authorize="hasRole('USER')">
-    <h2>User Dashboard</h2>
-</div>
+<div th:each="post : ${posts}">
+    
+    <h3>
+        <a th:href="@{'/posts/' + ${post.id}}" 
+           th:text="${post.title}"></a>
+    </h3>
 
-<!-- ADMIN -->
-<div sec:authorize="hasRole('ADMIN')">
-    <h2>Admin Panel</h2>
-</div>
+    <p>
+        Author: <span th:text="${post.account.firstname}"></span> |
+        Created: <span th:text="${post.createdAt}"></span>
+    </p>
 
+    <hr>
+</div>
 <form th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>
 </form>

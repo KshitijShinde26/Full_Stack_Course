@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2 th:text="${post.title}"></h2>
+
+<p th:text="${post.body}"></p>
+
+<p>
+    Author: <span th:text="${post.account.firstname}"></span>
+</p>
+
+<p>
+    Created: <span th:text="${post.createdAt}"></span>
+</p>
+
+<!-- Edit Button (ONLY OWNER) -->
+<a th:if="${isOwner}" 
+   th:href="@{'/edit-post/' + ${post.id}}" 
+   class="btn btn-primary">
+   Edit
+</a>
+</body>
+</html>
