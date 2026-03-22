@@ -1,7 +1,6 @@
 package com.basic_spring.demo.services;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +13,21 @@ import com.basic_spring.demo.repository.PostRepository;
 public class PostService {
 
     @Autowired
-    private PostRepository postRepository;
+    private PostRepository repo;
 
-    public Optional<Post> getById(Long id) {
-        return postRepository.findById(id);
+    public  Post save(Post post) {
+        if (post.getCreatedAt() == null) {
+            post.setUpdatedAt(LocalDateTime.now());
+        }
+        post.setUpdatedAt(LocalDateTime.now());
+        return repo.save(post);
     }
 
-    public List<Post> getAll() {
-        return postRepository.findAll();
+    public Optional<Post> getById(Long id) {
+        return repo.findById(id);
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
     }
 }

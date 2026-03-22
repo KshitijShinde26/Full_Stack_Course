@@ -1,17 +1,14 @@
 package com.basic_spring.demo.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
+@RequestMapping("/test")
 public class TestController {
 
     @GetMapping("/admin")
     public String admin() {
-        return "Admin Panel 🔥";
-    }
-
-    @GetMapping("/user")
-    public String user() {
-        return "User Dashboard 👍";
+        return "admin";
     }
 }

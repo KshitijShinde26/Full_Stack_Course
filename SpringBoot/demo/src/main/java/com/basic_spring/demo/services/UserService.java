@@ -19,7 +19,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public void register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // 🔐
+    	user.setPassword(user.getPassword());
         repo.save(user);
     }
 }

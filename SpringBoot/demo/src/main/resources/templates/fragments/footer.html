@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <body>
 
 <div th:fragment="footer">
 
-<footer class="bg-dark text-white text-center p-3 mt-5">
+    <!-- CKEditor Script -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
-<p>Contact: myemail@example.com</p>
-
-<p>LinkedIn | Instagram | GitHub</p>
-
-</footer>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 
 </div>
 
 </body>
-
 </html>

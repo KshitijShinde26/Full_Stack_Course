@@ -1,9 +1,9 @@
 package com.basic_spring.demo.controller;
 
 import java.security.Principal;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,41 +11,44 @@ import org.springframework.web.bind.annotation.*;
 import com.basic_spring.demo.model.Post;
 import com.basic_spring.demo.services.PostService;
 
-
-
 @Controller
 public class PostController {
 
     @Autowired
     private PostService postService;
 
-    @GetMapping("/posts/{id}")
-    public String getPost(@PathVariable Long id, Model model, Principal principal) {
+    // Show Add Post Page
+    @GetMapping("/add")
+    public String showAddPostPage(Model model) {
+        model.addAttribute("post", new Post());
+        return "post/post_add";
+    }
 
-        Optional<Post> optionalPost = postService.getById(id);
+    // Handle Add Post (simple)
+    @PostMapping("/post_add")
+    public String savePost(@ModelAttribute Post post) {
+        postService.save(post);
+        return "redirect:/add";
+    }
 
-        if (optionalPost.isPresent()) {
+    // Handle Add Post (secured version)
+    @PostMapping("/posts/add")
+    @PreAuthorize("isAuthenticated()")
+    public String addPost(@ModelAttribute Post post, Principal principal) {
 
-            Post post = optionalPost.get();
-            model.addAttribute("post", post);
+        String authUser = "";
 
-            // Check owner
-            boolean isOwner = false;
-
-            if (principal != null) {
-                String loggedUser = principal.getName();
-
-                if (loggedUser.equals(post.getAccount().getEmail())) {
-                    isOwner = true;
-                }
-            }
-
-            model.addAttribute("isOwner", isOwner);
-
-            return "post_views/post";
-
-        } else {
-            return "404";
+        if (principal != null) {
+            authUser = principal.getName();
         }
+
+        // security check
+        if (!post.getEmail().equalsIgnoreCase(authUser)) {
+            return "redirect:/?error";
+        }
+
+        postService.save(post);
+
+        return "redirect:/posts/" + post.getId();
     }
 }
