@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home Page</title>
+</head>
+<body>
+<div>
+    <h2>Posts</h2>
+
+    <div th:each="post : ${posts}">
+        <h3 th:text="${post.title}"></h3>
+        <p th:text="${post.content}"></p>
+    </div>
+
+    <!-- Pagination -->
+    <div>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{/(page=${i}, size=5, sortBy='createdAt')}"
+               th:text="${i}"></a>
+        </span>
+    </div>
+</div></body>
+</html>

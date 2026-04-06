@@ -1,20 +1,15 @@
 package com.basic_spring.demo.services;
 
-import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 import com.basic_spring.demo.model.Account;
-import com.basic_spring.demo.repository.AccountRepository;
 
-@Service
-public class AccountService {
+public interface AccountService {
 
-    private final AccountRepository accountRepository;
+    Optional<Account> findByEmail(String email);
 
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
+    Optional<Account> findByPasswordResetToken(String token);
 
-    public Account findByEmail(String email) {
-        return accountRepository.findByEmail(email);
-    }
+    Optional<Account> findById(Long id);
+
+    void save(Account account);
 }

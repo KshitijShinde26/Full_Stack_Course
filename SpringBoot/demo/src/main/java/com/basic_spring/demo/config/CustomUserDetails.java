@@ -1,15 +1,14 @@
 package com.basic_spring.demo.config;
 
-
-
-
-
 import com.basic_spring.demo.model.Account;
-import org.springframework.security.core.*;
+import com.basic_spring.demo.services.GrantedAuthority;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -19,21 +18,7 @@ public class CustomUserDetails implements UserDetails {
         this.account = account;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        Set<GrantedAuthority> authorities = new HashSet<>();
-
-        // ROLE
-        authorities.add(new SimpleGrantedAuthority(account.getRole()));
-
-        // AUTHORITIES
-        account.getAuthorities().forEach(auth ->
-            authorities.add(new SimpleGrantedAuthority(auth.getName()))
-        );
-
-        return authorities;
-    }
+    
 
     @Override
     public String getPassword() {
@@ -45,8 +30,20 @@ public class CustomUserDetails implements UserDetails {
         return account.getEmail();
     }
 
-    @Override public boolean isAccountNonExpired() { return true; }
-    @Override public boolean isAccountNonLocked() { return true; }
-    @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled() { return true; }
+    @Override
+    public boolean isAccountNonExpired() { return true; }
+
+    @Override
+    public boolean isAccountNonLocked() { return true; }
+
+    @Override
+    public boolean isCredentialsNonExpired() { return true; }
+
+    @Override
+    public boolean isEnabled() { return true; }
+    
+    @Override
+    public Collection<? extends org.springframework.security.core.GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(account.getRole()));
+    }
 }

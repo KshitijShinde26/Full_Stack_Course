@@ -1,34 +1,30 @@
 package com.basic_spring.demo.config;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.basic_spring.demo.model.Account;
 import com.basic_spring.demo.repository.AccountRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SeedData {
 
-    @Bean
-    CommandLineRunner init(AccountRepository repo, PasswordEncoder encoder) {
-        return args -> {
+	@Bean
+	CommandLineRunner init(AccountRepository repo, PasswordEncoder encoder) {
+	    return args -> {
 
-            if (repo.count() == 0) {
+	        // ✅ FIX: use count instead of findByEmail
+	        if (repo.count() == 0) {
 
-                Account admin = new Account();
-                admin.setEmail("admin@admin.com");
+	            Account user = new Account();
+	            user.setEmail("admin@gmail.com");
+	            user.setPassword(encoder.encode("1234"));
+	            user.setFirstName("Admin");
+	            user.setLastName("User");
+	            user.setRole("ROLE_ADMIN");
 
-                // 🔥 MUST BE ENCODED
-                admin.setPassword(encoder.encode("1234"));
-
-                admin.setFirstName("Admin");
-                admin.setLastName("User");
-                admin.setRole("ROLE_ADMIN");
-
-                repo.save(admin);
-            }
-        };
-    }
+	            repo.save(user);
+	        }
+	    };
+	}
 }

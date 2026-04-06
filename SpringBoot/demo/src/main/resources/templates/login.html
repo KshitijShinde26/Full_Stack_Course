@@ -5,10 +5,18 @@
 <h2>Login</h2>
 
 <form method="post" action="/login">
-    Email: <input type="text" name="username"/><br/>
-    Password: <input type="password" name="password"/><br/>
+    <input type="text" name="username" placeholder="Email">
+    <input type="password" name="password" placeholder="Password">
+
+    <input type="checkbox" name="remember-me"> Remember Me
+
     <button type="submit">Login</button>
 </form>
+
+<p th:if="${param.error}">Invalid credentials</p>
+<p th:if="${message}" th:text="${message}"></p>
+
+<a href="/forgot-password">Forgot Password?</a>
 
 </body>
 </html>
