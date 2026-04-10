@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 public class Post {
 
     @Id
-    private int id;
+    private Integer id;
     private String title;
 
     // Constructors
